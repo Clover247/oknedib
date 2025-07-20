@@ -39,7 +39,7 @@ import { SharedModule } from './shared/shared.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true,
+        synchronize: false,
         ssl: configService.get('DATABASE_URL') ? { rejectUnauthorized: false } : false,
       }),
       inject: [ConfigService],

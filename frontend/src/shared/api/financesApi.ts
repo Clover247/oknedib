@@ -7,7 +7,7 @@ export const financesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getPaymentsByProjectId: builder.query<any[], string>({
       query: (projectId) => `/payments?projectId=${projectId}`,
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result = [], _error, _arg) => [
         { type: 'Payment', id: 'LIST' },
         ...result.map(({ id }) => ({ type: 'Payment' as const, id })),
       ],
@@ -26,18 +26,18 @@ export const financesApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: payment,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Payment', id: arg.id }],
+      invalidatesTags: (_result, _error, arg) => [{ type: 'Payment', id: arg.id }],
     }),
     deletePayment: builder.mutation<void, string>({
       query: (id) => ({
         url: `/payments/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Payment', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'Payment', id }],
     }),
     getBudgetHistoryByProjectId: builder.query<any[], string>({
       query: (projectId) => `/projects/${projectId}/budget-history`,
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result = [], _error, _arg) => [
         { type: 'BudgetHistory', id: 'LIST' },
         ...result.map(({ id }) => ({ type: 'BudgetHistory' as const, id })),
       ],

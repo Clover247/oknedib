@@ -15,6 +15,6 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   reducerPath: 'api',
   baseQuery,
-  tagTypes: ['Project', 'Task', 'Payment', 'ContentPlan'], // Теги для кешування
-  endpoints: builder => ({})
+  tagTypes: ['Project', 'Task', 'Payment', 'ContentPlan', 'BudgetHistory'], // Теги для кешування
+  endpoints: _builder => ({})
 });

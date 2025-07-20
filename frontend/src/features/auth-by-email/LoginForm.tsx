@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, CircularProgress, Typography } from '@mui/material';
+import { useLoginMutation } from '../../shared/api/authApi';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../app/store';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setLoading(true);
     setError(null);
-    // Here you would dispatch your Redux thunk for login
-    console.log('Login attempt with:', { email, password });
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    if (email === 'test@example.com' && password === 'password123') {
-      console.log('Login successful');
-    } else {
-      setError('Invalid credentials');
+    try {
+      const { accessToken, user } = await login({ email, password }).unwrap();
+      dispatch(setCredentials({ token: accessToken, user }));
+      navigate('/projects'); // Redirect to projects page on successful login
+    } catch (err: any) {
+      setError(err.data?.message || 'Login failed');
     }
-    setLoading(false);
   };
 
   return (
@@ -55,9 +57,9 @@ const LoginForm: React.FC = () => {
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
-        disabled={loading}
+        disabled={isLoading}
       >
-        {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
+        {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign In'}
       </Button>
     </Box>
   );

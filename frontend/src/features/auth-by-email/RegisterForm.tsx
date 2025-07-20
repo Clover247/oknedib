@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, CircularProgress, MenuItem, Select, InputLabel, FormControl, Typography } from '@mui/material';
+import { useRegisterMutation } from '../../shared/api/authApi';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../../app/store';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -7,23 +11,21 @@ const RegisterForm: React.FC = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [role, setRole] = useState('SPECIALIST'); // Default role
-  const [loading, setLoading] = useState(false);
+  const [register, { isLoading }] = useRegisterMutation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setLoading(true);
     setError(null);
-    // Here you would dispatch your Redux thunk for registration
-    console.log('Register attempt with:', { email, password, firstName, lastName, role });
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    if (email !== 'existing@example.com') {
-      console.log('Registration successful');
-    } else {
-      setError('User with this email already exists');
+    try {
+      const { accessToken, user } = await register({ email, password, firstName, lastName, role }).unwrap();
+      dispatch(setCredentials({ token: accessToken, user }));
+      navigate('/projects'); // Redirect to projects page on successful registration
+    } catch (err: any) {
+      setError(err.data?.message || 'Registration failed');
     }
-    setLoading(false);
   };
 
   return (
@@ -95,9 +97,9 @@ const RegisterForm: React.FC = () => {
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
-        disabled={loading}
+        disabled={isLoading}
       >
-        {loading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
+        {isLoading ? <CircularProgress size={24} color="inherit" /> : 'Sign Up'}
       </Button>
     </Box>
   );

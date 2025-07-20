@@ -5,18 +5,20 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useGetContentPlansByProjectIdQuery, useCreateContentPlanMutation, useUpdateContentPlanMutation, useDeleteContentPlanMutation, useUploadContentPlanFileMutation } from '../../../shared/api/contentPlansApi';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
+import DeleteIcon from '@mui/icons-material/Delete';
+
 interface ProjectContentPlanTabProps {
   projectId: string;
 }
 
 const columns: GridColDef[] = [
-  { field: 'month', headerName: 'Month', width: 100 },
-  { field: 'year', headerName: 'Year', width: 100 },
-  { field: 'status', headerName: 'Status', width: 150 },
-  { field: 'totalPosts', headerName: 'Total Posts', width: 120 },
-  { field: 'completedPosts', headerName: 'Completed Posts', width: 150 },
-  { field: 'totalStories', headerName: 'Total Stories', width: 120 },
-  { field: 'completedStories', headerName: 'Completed Stories', width: 150 },
+  { field: 'month', headerName: 'Month', width: 100, editable: true, type: 'number' },
+  { field: 'year', headerName: 'Year', width: 100, editable: true, type: 'number' },
+  { field: 'status', headerName: 'Status', width: 150, editable: true },
+  { field: 'totalPosts', headerName: 'Total Posts', width: 120, editable: true, type: 'number' },
+  { field: 'completedPosts', headerName: 'Completed Posts', width: 150, editable: true, type: 'number' },
+  { field: 'totalStories', headerName: 'Total Stories', width: 120, editable: true, type: 'number' },
+  { field: 'completedStories', headerName: 'Completed Stories', width: 150, editable: true, type: 'number' },
   { field: 'progress', headerName: 'Progress (%)', width: 120 },
   {
     field: 'actions',
@@ -24,6 +26,7 @@ const columns: GridColDef[] = [
     width: 150,
     renderCell: (params) => {
       const [uploadFile] = useUploadContentPlanFileMutation();
+      const [deleteContentPlan] = useDeleteContentPlanMutation();
 
       const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
@@ -35,6 +38,12 @@ const columns: GridColDef[] = [
             console.error('Failed to upload file:', error);
             alert('Failed to upload file.');
           }
+        }
+      };
+
+      const handleDelete = async () => {
+        if (window.confirm('Are you sure you want to delete this content plan?')) {
+          await deleteContentPlan(params.id as string);
         }
       };
 
@@ -53,6 +62,9 @@ const columns: GridColDef[] = [
               <CloudUploadIcon />
             </IconButton>
           </label>
+          <IconButton onClick={handleDelete} color="error">
+            <DeleteIcon />
+          </IconButton>
         </>
       );
     },
@@ -64,6 +76,7 @@ export const ProjectContentPlanTab: React.FC<ProjectContentPlanTabProps> = ({ pr
   const [newMonth, setNewMonth] = useState('');
   const [newYear, setNewYear] = useState('');
   const [createContentPlan] = useCreateContentPlanMutation();
+  const [updateContentPlan] = useUpdateContentPlanMutation();
 
   const handleCreateContentPlan = async () => {
     if (newMonth && newYear) {
@@ -71,6 +84,11 @@ export const ProjectContentPlanTab: React.FC<ProjectContentPlanTabProps> = ({ pr
       setNewMonth('');
       setNewYear('');
     }
+  };
+
+  const handleProcessRowUpdate = async (newRow: any) => {
+    await updateContentPlan(newRow);
+    return newRow;
   };
 
   if (isLoading) {
@@ -101,7 +119,12 @@ export const ProjectContentPlanTab: React.FC<ProjectContentPlanTabProps> = ({ pr
         />
         <Button variant="contained" onClick={handleCreateContentPlan}>Create Content Plan</Button>
       </Box>
-      <DataGrid rows={contentPlans || []} columns={columns} />
+      <DataGrid
+        rows={contentPlans || []}
+        columns={columns}
+        processRowUpdate={handleProcessRowUpdate}
+        onProcessRowUpdateError={(error: any) => console.error(error)}
+      />
     </Box>
   );
 };

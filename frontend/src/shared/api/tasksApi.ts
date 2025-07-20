@@ -7,7 +7,7 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getTasksByProjectId: builder.query<any[], string>({
       query: (projectId) => `/tasks?projectId=${projectId}`,
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result = [], _error, _arg) => [
         { type: 'Task', id: 'LIST' },
         ...result.map(({ id }) => ({ type: 'Task' as const, id })),
       ],
@@ -26,14 +26,14 @@ export const tasksApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: task,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.id }],
+      invalidatesTags: (_result, _error, arg) => [{ type: 'Task', id: arg.id }],
     }),
     deleteTask: builder.mutation<void, string>({
       query: (id) => ({
         url: `/tasks/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'Task', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'Task', id }],
     }),
   }),
 });

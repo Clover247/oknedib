@@ -8,20 +8,39 @@ interface ProjectTasksTabProps {
   projectId: string;
 }
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+
 const columns: GridColDef[] = [
   { field: 'title', headerName: 'Title', width: 200, editable: true },
   { field: 'description', headerName: 'Description', width: 300, editable: true },
   { field: 'status', headerName: 'Status', width: 150, editable: true },
   { field: 'dueDate', headerName: 'Due Date', width: 150, editable: true },
   { field: 'assigneeId', headerName: 'Assignee', width: 150, editable: true },
+  {
+    field: 'actions',
+    headerName: 'Actions',
+    width: 100,
+    renderCell: (params) => {
+      const [deleteTask] = useDeleteTaskMutation();
+      const handleDelete = async () => {
+        if (window.confirm('Are you sure you want to delete this task?')) {
+          await deleteTask(params.id as string);
+        }
+      };
+      return (
+        <IconButton onClick={handleDelete} color="error">
+          <DeleteIcon />
+        </IconButton>
+      );
+    },
+  },
 ];
 
 export const ProjectTasksTab: React.FC<ProjectTasksTabProps> = ({ projectId }) => {
   const { data: tasks, isLoading, isError } = useGetTasksByProjectIdQuery(projectId);
   const [createTask] = useCreateTaskMutation();
   const [updateTask] = useUpdateTaskMutation();
-  const [deleteTask] = useDeleteTaskMutation();
-
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   const handleCreateTask = async () => {
@@ -35,8 +54,6 @@ export const ProjectTasksTab: React.FC<ProjectTasksTabProps> = ({ projectId }) =
     await updateTask(newRow);
     return newRow;
   };
-
-  // TODO: Add delete functionality
 
   if (isLoading) {
     return <CircularProgress />;
@@ -63,9 +80,7 @@ export const ProjectTasksTab: React.FC<ProjectTasksTabProps> = ({ projectId }) =
         columns={columns}
         processRowUpdate={handleProcessRowUpdate}
         onProcessRowUpdateError={(error: any) => console.error(error)}
-        experimentalFeatures={{ newEditingApi: true }}
       />
-      {/* TODO: Add delete functionality */}
     </Box>
   );
 };

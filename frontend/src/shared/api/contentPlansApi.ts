@@ -7,7 +7,7 @@ export const contentPlansApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getContentPlansByProjectId: builder.query<any[], string>({
       query: (projectId) => `/content-plans?projectId=${projectId}`,
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result = [], _error, _arg) => [
         { type: 'ContentPlan', id: 'LIST' },
         ...result.map(({ id }) => ({ type: 'ContentPlan' as const, id })),
       ],
@@ -26,14 +26,14 @@ export const contentPlansApiSlice = apiSlice.injectEndpoints({
         method: 'PATCH',
         body: contentPlan,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: 'ContentPlan', id: arg.id }],
+      invalidatesTags: (_result, _error, arg) => [{ type: 'ContentPlan', id: arg.id }],
     }),
     deleteContentPlan: builder.mutation<void, string>({
       query: (id) => ({
         url: `/content-plans/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: (result, error, id) => [{ type: 'ContentPlan', id }],
+      invalidatesTags: (_result, _error, id) => [{ type: 'ContentPlan', id }],
     }),
     uploadContentPlanFile: builder.mutation<any, { itemId: string; file: File }>({
       query: ({ itemId, file }) => {
@@ -45,7 +45,7 @@ export const contentPlansApiSlice = apiSlice.injectEndpoints({
           body: formData,
         };
       },
-      invalidatesTags: (result, error, arg) => [{ type: 'ContentPlan', id: arg.itemId }],
+      invalidatesTags: (_result, _error, arg) => [{ type: 'ContentPlan', id: arg.itemId }],
     }),
   }),
 });

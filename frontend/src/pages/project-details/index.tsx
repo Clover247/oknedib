@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Box, CircularProgress, Typography, Tabs, Tab } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useGetProjectsQuery } from '../../shared/api/projectsApi';
+import { ProjectTasksTab } from './tabs/ProjectTasksTab';
+import { ProjectContentPlanTab } from './tabs/ProjectContentPlanTab';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -44,7 +46,7 @@ export const ProjectDetailsPage = () => {
 
   const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 

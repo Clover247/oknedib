@@ -7,7 +7,7 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getProjects: builder.query<any[], void>({
       query: () => '/projects',
-      providesTags: (result = [], error, arg) => [
+      providesTags: (result = [], _error, _arg) => [
         'Project',
         ...result.map(({ id }) => ({ type: 'Project' as const, id })),
       ],

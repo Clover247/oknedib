@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ProjectsPage } from './pages/projects';
+import { ProjectDetailsPage } from './pages/project-details';
 import { Layout } from './widgets/Layout';
-
-// TODO: Replace with real auth check
-const isAuthenticated = true;
+import { useSelector } from 'react-redux';
+import { selectCurrentToken } from './app/store';
 
 const PrivateRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return isAuthenticated ? <Layout>{children}</Layout> : <Navigate to="/login" />;
+  const token = useSelector(selectCurrentToken);
+  return token ? <Layout>{children}</Layout> : <Navigate to="/login" />;
 };
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/dashboard" element={<div>Dashboard</div>} />
                 <Route path="/projects" element={<ProjectsPage />} />
                 <Route path="/settings" element={<div>Settings</div>} />
+                                <Route path="/projects/:id" element={<ProjectDetailsPage />} /> {/* Add this line */}
                 <Route path="/" element={<Navigate to="/dashboard" />} />
               </Routes>
             </PrivateRoute>

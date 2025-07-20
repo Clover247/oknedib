@@ -1,0 +1,30 @@
+import { BudgetHistoryService } from '@/modules/project-details/2-application/use-cases/budget-history.service';
+import { ShootingHoursService } from '@/modules/project-details/2-application/use-cases/shooting-hours.service';
+import { CommentsService } from '@/modules/project-details/2-application/use-cases/comments.service';
+import { CreateBudgetHistoryDto } from '@/modules/project-details/1-presentation/dtos/create-budget-history.dto';
+import { UpdateBudgetHistoryDto } from '@/modules/project-details/1-presentation/dtos/update-budget-history.dto';
+import { CreateShootingHoursDto } from '@/modules/project-details/1-presentation/dtos/create-shooting-hours.dto';
+import { UpdateShootingHoursDto } from '@/modules/project-details/1-presentation/dtos/update-shooting-hours.dto';
+import { CreateCommentDto } from '@/modules/project-details/1-presentation/dtos/create-comment.dto';
+import { UpdateCommentDto } from '@/modules/project-details/1-presentation/dtos/update-comment.dto';
+export declare class ProjectDetailsController {
+    private readonly budgetHistoryService;
+    private readonly shootingHoursService;
+    private readonly commentsService;
+    constructor(budgetHistoryService: BudgetHistoryService, shootingHoursService: ShootingHoursService, commentsService: CommentsService);
+    createBudgetHistory(projectId: string, createBudgetHistoryDto: CreateBudgetHistoryDto): Promise<import("../../3-domain/entities/budget-history.entity").BudgetHistory>;
+    findAllBudgetHistory(projectId: string): Promise<import("../../3-domain/entities/budget-history.entity").BudgetHistory[]>;
+    findOneBudgetHistory(id: string): Promise<import("../../3-domain/entities/budget-history.entity").BudgetHistory>;
+    updateBudgetHistory(id: string, updateBudgetHistoryDto: UpdateBudgetHistoryDto): Promise<import("../../3-domain/entities/budget-history.entity").BudgetHistory>;
+    removeBudgetHistory(id: string): Promise<void>;
+    createShootingHours(projectId: string, createShootingHoursDto: CreateShootingHoursDto): Promise<import("../../3-domain/entities/shooting-hours.entity").ShootingHours>;
+    findAllShootingHours(projectId: string): Promise<import("../../3-domain/entities/shooting-hours.entity").ShootingHours[]>;
+    findOneShootingHours(id: string): Promise<import("../../3-domain/entities/shooting-hours.entity").ShootingHours>;
+    updateShootingHours(id: string, updateShootingHoursDto: UpdateShootingHoursDto): Promise<import("../../3-domain/entities/shooting-hours.entity").ShootingHours>;
+    removeShootingHours(id: string): Promise<void>;
+    createComment(projectId: string, createCommentDto: CreateCommentDto): Promise<import("../../3-domain/entities/comment.entity").Comment>;
+    findAllComments(projectId: string): Promise<import("../../3-domain/entities/comment.entity").Comment[]>;
+    findOneComment(id: string): Promise<import("../../3-domain/entities/comment.entity").Comment>;
+    updateComment(id: string, updateCommentDto: UpdateCommentDto): Promise<import("../../3-domain/entities/comment.entity").Comment>;
+    removeComment(id: string): Promise<void>;
+}

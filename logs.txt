@@ -1,0 +1,211 @@
+Nazar@DESKTOP-LRCQV96 MINGW64 ~/Desktop/newProject/oknedib/frontend (main)
+$ pnpm run build
+
+> frontend@0.0.0 build C:\Users\Nazar\Desktop\newProject\oknedib\frontend
+> tsc && vite build
+
+src/pages/project-details/index.tsx:47:25 - error TS6133: 'event' is declared but its value is never read.
+
+47   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+                           ~~~~~
+
+src/pages/project-details/index.tsx:73:17 - error TS2304: Cannot find name 'ProjectTasksTab'.
+
+73         {id && <ProjectTasksTab projectId={id} />}
+                   ~~~~~~~~~~~~~~~
+
+src/pages/project-details/index.tsx:76:17 - error TS2304: Cannot find name 'ProjectContentPlanTab'.
+
+76         {id && <ProjectContentPlanTab projectId={id} />}
+                   ~~~~~~~~~~~~~~~~~~~~~
+
+src/pages/project-details/tabs/ProjectContentPlanTab.tsx:5:76 - error TS6133: 'useUpdateContentPlanMutation' is declared but its value is never read.
+
+5 import { useGetContentPlansByProjectIdQuery, useCreateContentPlanMutation, useUpdateContentPlanMutation, useDeleteContentPlanMutation, useUploadContentPlanFileMutation } from '../../../shared/api/contentPlansApi';
+                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/pages/project-details/tabs/ProjectContentPlanTab.tsx:5:106 - error TS6133: 'useDeleteContentPlanMutation' is declared but its value is never read.
+
+5 import { useGetContentPlansByProjectIdQuery, useCreateContentPlanMutation, useUpdateContentPlanMutation, useDeleteContentPlanMutation, useUploadContentPlanFileMutation } from '../../../shared/api/contentPlansApi';
+                                                                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/pages/project-details/tabs/ProjectTasksTab.tsx:23:10 - error TS6133: 'deleteTask' is declared but its value is never read.
+
+23   const [deleteTask] = useDeleteTaskMutation();
+            ~~~~~~~~~~
+
+src/pages/project-details/tabs/ProjectTasksTab.tsx:66:33 - error TS2353: Object literal may only specify known properties, and 'newEditingApi' does not exist in type 'Partial<GridExperimentalFeatures>'.     
+
+66         experimentalFeatures={{ newEditingApi: true }}
+                                   ~~~~~~~~~~~~~
+
+  node_modules/.pnpm/@mui+x-data-grid@8.8.0_@emo_4e1fac9dfa0a8ae533b834ba6d2843c7/node_modules/@mui/x-data-grid/esm/models/props/DataGridProps.d.ts:772:3
+    772   experimentalFeatures?: Partial<GridExperimentalFeatures>;
+          ~~~~~~~~~~~~~~~~~~~~
+    The expected type comes from property 'experimentalFeatures' which is declared here on type 'IntrinsicAttributes & Omit<Partial<DataGridPropsWithDefaultValues<any>> & DataGridPropsWithComplexDefaultValueBeforeProcessing & DataGridPropsWithoutDefaultValue<...>, DataGridForcedPropsKey> & { ...; } & RefAttributes<...>'
+
+src/pages/projects/index.tsx:2:8 - error TS6133: 'React' is declared but its value is never read.
+
+2 import React, { useState } from 'react';
+         ~~~~~
+
+src/shared/api/apiSlice.ts:19:14 - error TS6133: 'builder' is declared but its value is never read.
+
+19   endpoints: builder => ({})
+                ~~~~~~~
+
+src/shared/api/contentPlansApi.ts:10:35 - error TS6133: 'error' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                     ~~~~~
+
+src/shared/api/contentPlansApi.ts:10:42 - error TS6133: 'arg' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                            ~~~
+
+src/shared/api/contentPlansApi.ts:29:25 - error TS6133: 'result' is declared but its value is never read.
+
+29       invalidatesTags: (result, error, arg) => [{ type: 'ContentPlan', id: arg.id }],
+                           ~~~~~~
+
+src/shared/api/contentPlansApi.ts:29:33 - error TS6133: 'error' is declared but its value is never read.
+
+29       invalidatesTags: (result, error, arg) => [{ type: 'ContentPlan', id: arg.id }],
+                                   ~~~~~
+
+src/shared/api/contentPlansApi.ts:36:25 - error TS6133: 'result' is declared but its value is never read.
+
+36       invalidatesTags: (result, error, id) => [{ type: 'ContentPlan', id }],
+                           ~~~~~~
+
+src/shared/api/contentPlansApi.ts:36:33 - error TS6133: 'error' is declared but its value is never read.
+
+36       invalidatesTags: (result, error, id) => [{ type: 'ContentPlan', id }],
+                                   ~~~~~
+
+src/shared/api/contentPlansApi.ts:48:25 - error TS6133: 'result' is declared but its value is never read.
+
+48       invalidatesTags: (result, error, arg) => [{ type: 'ContentPlan', id: arg.itemId }],
+                           ~~~~~~
+
+src/shared/api/contentPlansApi.ts:48:33 - error TS6133: 'error' is declared but its value is never read.
+
+48       invalidatesTags: (result, error, arg) => [{ type: 'ContentPlan', id: arg.itemId }],
+                                   ~~~~~
+
+src/shared/api/financesApi.ts:10:35 - error TS6133: 'error' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                     ~~~~~
+
+src/shared/api/financesApi.ts:10:42 - error TS6133: 'arg' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                            ~~~
+
+src/shared/api/financesApi.ts:29:25 - error TS6133: 'result' is declared but its value is never read.
+
+29       invalidatesTags: (result, error, arg) => [{ type: 'Payment', id: arg.id }],
+                           ~~~~~~
+
+src/shared/api/financesApi.ts:29:33 - error TS6133: 'error' is declared but its value is never read.
+
+29       invalidatesTags: (result, error, arg) => [{ type: 'Payment', id: arg.id }],
+                                   ~~~~~
+
+src/shared/api/financesApi.ts:36:25 - error TS6133: 'result' is declared but its value is never read.
+
+36       invalidatesTags: (result, error, id) => [{ type: 'Payment', id }],
+                           ~~~~~~
+
+src/shared/api/financesApi.ts:36:33 - error TS6133: 'error' is declared but its value is never read.
+
+36       invalidatesTags: (result, error, id) => [{ type: 'Payment', id }],
+                                   ~~~~~
+
+src/shared/api/financesApi.ts:40:7 - error TS2322: Type '(result: any[] | undefined, error: FetchBaseQueryError | undefined, arg: string) => { type: "BudgetHistory"; id: any; }[]' is not assignable to type 'ResultDescription<"Project" | "Task" | "Payment" | "ContentPlan", any[], string, FetchBaseQueryError, FetchBaseQueryMeta | undefined> | undefined'.
+  Type '(result: any[] | undefined, error: FetchBaseQueryError | undefined, arg: string) => { type: "BudgetHistory"; id: any; }[]' is not assignable to type 'GetResultDescriptionFn<"Project" | "Task" | "Payment" | "ContentPlan", any[], string, FetchBaseQueryError, FetchBaseQueryMeta | undefined>'.
+    Type '{ type: "BudgetHistory"; id: any; }[]' is not assignable to type 'TagDescriptionArray<"Project" | "Task" | "Payment" | "ContentPlan">'.
+      Type '{ type: "BudgetHistory"; id: any; }' is not assignable to type 'TagDescription<"Project" | "Task" | "Payment" | "ContentPlan"> | null | undefined'.
+        Type '{ type: "BudgetHistory"; id: any; }' is not assignable to type 'FullTagDescription<"Project" | "Task" | "Payment" | "ContentPlan">'.
+          Types of property 'type' are incompatible.
+            Type '"BudgetHistory"' is not assignable to type '"Project" | "Task" | "Payment" | "ContentPlan"'.
+
+40       providesTags: (result = [], error, arg) => [
+         ~~~~~~~~~~~~
+
+  node_modules/.pnpm/@reduxjs+toolkit@2.8.2_reac_f9daff2605309e9949e8b8298485bee5/node_modules/@reduxjs/toolkit/dist/query/index.d.mts:2021:5
+    2021     providesTags?: ResultDescription<TagTypes, ResultType, QueryArg, BaseQueryError<BaseQuery>, BaseQueryMeta<BaseQuery>>;
+             ~~~~~~~~~~~~
+    The expected type comes from property 'providesTags' which is declared here on type 'Omit<EndpointDefinitionWithQuery<string, BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError, {}, FetchBaseQueryMeta>, any[], unknown> & CommonEndpointDefinition<...> & { ...; } & { ...; } & QueryExtraOptions<...>, "type"> | Omit<...>'
+
+src/shared/api/financesApi.ts:40:35 - error TS6133: 'error' is declared but its value is never read.
+
+40       providesTags: (result = [], error, arg) => [
+                                     ~~~~~
+
+src/shared/api/financesApi.ts:40:42 - error TS6133: 'arg' is declared but its value is never read.
+
+40       providesTags: (result = [], error, arg) => [
+                                            ~~~
+
+src/shared/api/financesApi.ts:51:27 - error TS2322: Type '"BudgetHistory"' is not assignable to type '"Project" | "Task" | "Payment" | "ContentPlan"'.
+
+51       invalidatesTags: [{ type: 'BudgetHistory', id: 'LIST' }],
+                             ~~~~
+
+src/shared/api/projectsApi.ts:10:35 - error TS6133: 'error' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                     ~~~~~
+
+src/shared/api/projectsApi.ts:10:42 - error TS6133: 'arg' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                            ~~~
+
+src/shared/api/tasksApi.ts:10:35 - error TS6133: 'error' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                     ~~~~~
+
+src/shared/api/tasksApi.ts:10:42 - error TS6133: 'arg' is declared but its value is never read.
+
+10       providesTags: (result = [], error, arg) => [
+                                            ~~~
+
+src/shared/api/tasksApi.ts:29:25 - error TS6133: 'result' is declared but its value is never read.
+
+29       invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.id }],
+                           ~~~~~~
+
+src/shared/api/tasksApi.ts:29:33 - error TS6133: 'error' is declared but its value is never read.
+
+29       invalidatesTags: (result, error, arg) => [{ type: 'Task', id: arg.id }],
+                                   ~~~~~
+
+src/shared/api/tasksApi.ts:36:25 - error TS6133: 'result' is declared but its value is never read.
+
+36       invalidatesTags: (result, error, id) => [{ type: 'Task', id }],
+                           ~~~~~~
+
+src/shared/api/tasksApi.ts:36:33 - error TS6133: 'error' is declared but its value is never read.
+
+36       invalidatesTags: (result, error, id) => [{ type: 'Task', id }],
+                                   ~~~~~
+
+
+Found 35 errors in 9 files.
+
+Errors  Files
+     3  src/pages/project-details/index.tsx:47
+     2  src/pages/project-details/tabs/ProjectContentPlanTab.tsx:5
+     2  src/pages/project-details/tabs/ProjectTasksTab.tsx:23
+     1  src/pages/projects/index.tsx:2
+     1  src/shared/api/apiSlice.ts:19
+     8  src/shared/api/contentPlansApi.ts:10
+    10  src/shared/api/financesApi.ts:10
+     2  src/shared/api/projectsApi.ts:10
+     6  src/shared/api/tasksApi.ts:10
+ ELIFECYCLE  Command failed with exit code 2.

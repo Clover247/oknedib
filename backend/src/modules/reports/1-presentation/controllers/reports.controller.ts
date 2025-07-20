@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards, Query, Res, Header } from '@nestjs/common';
+import { Response } from 'express';
 import { ReportsService } from '@/modules/reports/2-application/use-cases/reports.service';
 import { JwtAuthGuard } from '@/modules/auth/1-presentation/guards/jwt-auth.guard';
 
@@ -28,23 +29,17 @@ export class ReportsController {
   }
 
   @Post('export/excel')
-  @Header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-  async exportToExcel(@Body() data: any, @Query('name') name: string, @Res() res: Response) {
-    const buffer = await this.reportsService.exportToExcel(data, name);
-    res.send(buffer);
+  exportToExcel(@Body() data: any, @Query('name') name: string) {
+    return this.reportsService.exportToExcel(data, name);
   }
 
   @Post('export/pdf')
-  @Header('Content-Type', 'application/pdf')
-  async exportToPDF(@Body() data: any, @Query('name') name: string, @Res() res: Response) {
-    const buffer = await this.reportsService.exportToPDF(data, name);
-    res.send(buffer);
+  exportToPDF(@Body() data: any, @Query('name') name: string) {
+    return this.reportsService.exportToPDF(data, name);
   }
 
   @Post('export/csv')
-  @Header('Content-Type', 'text/csv')
-  async exportToCSV(@Body() data: any, @Query('name') name: string, @Res() res: Response) {
-    const csv = await this.reportsService.exportToCSV(data, name);
-    res.send(csv);
+  exportToCSV(@Body() data: any, @Query('name') name: string) {
+    return this.reportsService.exportToCSV(data, name);
   }
 }

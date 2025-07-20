@@ -1,8 +1,8 @@
 
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { TasksService } from '../2-application/use-cases/tasks.service';
-import { CreateTaskDto } from './dtos/create-task.dto';
-import { UpdateTaskDto } from './dtos/update-task.dto';
+import { TasksService } from '../../2-application/use-cases/tasks.service';
+import { CreateTaskDto } from '../dtos/create-task.dto';
+import { UpdateTaskDto } from '../dtos/update-task.dto';
 
 @Controller('tasks')
 export class TasksController {

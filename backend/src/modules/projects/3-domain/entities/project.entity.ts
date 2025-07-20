@@ -5,6 +5,8 @@ import { BudgetHistory } from '@/modules/project-details/3-domain/entities/budge
 import { ShootingHours } from '@/modules/project-details/3-domain/entities/shooting-hours.entity';
 import { Comment } from '@/modules/project-details/3-domain/entities/comment.entity';
 import { ContentPlan } from '@/modules/content-plans/3-domain/entities/content-plan.entity';
+import { Task } from '@/modules/tasks/3-domain/entities/task.entity';
+import { CalendarEvent } from '@/modules/google-calendar/3-domain/entities/calendar-event.entity';
 
 export enum ProjectStatus {
   ACTIVE = 'ACTIVE',

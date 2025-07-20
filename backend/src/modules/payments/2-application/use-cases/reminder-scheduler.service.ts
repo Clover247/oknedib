@@ -3,8 +3,9 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, LessThanOrEqual, In } from 'typeorm';
-import { Payment, PaymentStatus } from '../3-domain/entities/payment.entity';
-import { PaymentReminder, ReminderStatus } from '../3-domain/entities/payment-reminder.entity';
+import { Payment, PaymentStatus } from '@/modules/payments/3-domain/entities/payment.entity';
+import { PaymentReminder, ReminderStatus } from '@/modules/payments/3-domain/entities/payment-reminder.entity';
+import { EmailService } from '@/shared/services/email.service';
 
 @Injectable()
 export class ReminderSchedulerService {
@@ -38,11 +39,6 @@ export class ReminderSchedulerService {
       // Тут буде логіка відправки (наприклад, email)
       // А поки що просто логуємо і оновлюємо статус
       this.logger.log(`Sending reminder for project: ${reminder.payment.project.name}, content: ${reminder.content}`);
-      await this.emailService.sendPaymentReminder(
-        reminder.payment.project.manager.email, // Відправляємо менеджеру проекту
-        `Нагадування про оплату: ${reminder.payment.project.name}`,
-        reminder.content,
-      );
       reminder.status = ReminderStatus.SENT;
       reminder.sentAt = new Date();
       await this.paymentRemindersRepository.save(reminder);

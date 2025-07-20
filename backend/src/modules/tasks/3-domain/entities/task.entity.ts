@@ -1,7 +1,8 @@
 
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 import { User } from '@/modules/users/3-domain/entities/user.entity';
+import { Comment } from '@/modules/project-details/3-domain/entities/comment.entity';
 
 export enum TaskStatus {
   PENDING = 'PENDING',

@@ -1,6 +1,7 @@
-import { Controller, Get, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards, Query, UseInterceptors } from '@nestjs/common';
 import { AnalyticsService } from '@/modules/analytics/2-application/use-cases/analytics.service';
 import { JwtAuthGuard } from '@/modules/auth/1-presentation/guards/jwt-auth.guard';
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 
 @UseGuards(JwtAuthGuard)
 @Controller('analytics')

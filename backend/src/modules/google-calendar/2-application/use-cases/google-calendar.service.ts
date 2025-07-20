@@ -1,6 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CalendarEvent } from '@/modules/google-calendar/3-domain/entities/calendar-event.entity';
+import { GoogleApiCredentials } from '@/modules/google-calendar/3-domain/entities/google-api-credentials.entity';
+import { User } from '@/modules/users/3-domain/entities/user.entity';
+import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 import { Repository } from 'typeorm';
 import { CreateCalendarEventDto } from '@/modules/google-calendar/1-presentation/dtos/create-calendar-event.dto';
 import { UpdateCalendarEventDto } from '@/modules/google-calendar/1-presentation/dtos/update-calendar-event.dto';
@@ -15,6 +18,12 @@ export class GoogleCalendarService {
   constructor(
     @InjectRepository(CalendarEvent)
     private calendarEventsRepository: Repository<CalendarEvent>,
+    @InjectRepository(GoogleApiCredentials)
+    private credentialsRepository: Repository<GoogleApiCredentials>,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+    @InjectRepository(Project)
+    private projectsRepository: Repository<Project>,
     private configService: ConfigService,
   ) {
     this.oauth2Client = new google.auth.OAuth2(
@@ -68,13 +77,6 @@ export class GoogleCalendarService {
 
   async createEvent(createCalendarEventDto: CreateCalendarEventDto): Promise<CalendarEvent> {
     const event = this.calendarEventsRepository.create(createCalendarEventDto);
-    if (createCalendarEventDto.projectId) {
-      const project = await this.projectsRepository.findOneBy({ id: createCalendarEventDto.projectId });
-      if (!project) {
-        throw new NotFoundException(`Project with ID ${createCalendarEventDto.projectId} not found`);
-      }
-      event.project = project;
-    }
     const savedEvent = await this.calendarEventsRepository.save(event);
 
     // Create event in Google Calendar

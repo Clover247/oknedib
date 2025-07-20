@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsEnum, IsDateString, IsOptional, IsArray } from 'class-validator';
+import { IsString, IsNotEmpty, IsEnum, IsDateString, IsOptional, IsArray, IsUUID } from 'class-validator';
 import { CalendarEventType, CalendarEventStatus } from '@/modules/google-calendar/3-domain/entities/calendar-event.entity';
 
 export class CreateCalendarEventDto {

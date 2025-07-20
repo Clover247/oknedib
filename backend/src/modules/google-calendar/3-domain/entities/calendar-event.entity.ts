@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 
 export enum CalendarEventType {
   SHOOTING = 'SHOOTING',

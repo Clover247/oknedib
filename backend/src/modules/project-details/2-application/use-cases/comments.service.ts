@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Comment } from '@/modules/project-details/3-domain/entities/comment.entity';
 import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 import { User } from '@/modules/users/3-domain/entities/user.entity';
+import { Task } from '@/modules/tasks/3-domain/entities/task.entity';
 import { Repository } from 'typeorm';
 import { CreateCommentDto } from '@/modules/project-details/1-presentation/dtos/create-comment.dto';
 import { UpdateCommentDto } from '@/modules/project-details/1-presentation/dtos/update-comment.dto';
@@ -21,33 +22,21 @@ export class CommentsService {
   ) {}
 
   async create(createCommentDto: CreateCommentDto): Promise<Comment> {
-    const { projectId, authorId, taskId } = createCommentDto;
+    const project = await this.projectsRepository.findOneBy({ id: createCommentDto.projectId });
+    if (!project) {
+      throw new NotFoundException(`Project with ID ${createCommentDto.projectId} not found`);
+    }
 
-    const author = await this.usersRepository.findOneBy({ id: authorId });
+    const author = await this.usersRepository.findOneBy({ id: createCommentDto.authorId });
     if (!author) {
-      throw new NotFoundException(`Author with ID ${authorId} not found`);
+      throw new NotFoundException(`Author with ID ${createCommentDto.authorId} not found`);
     }
 
-    const commentData: Partial<Comment> = { ...createCommentDto, author };
-
-    if (taskId) {
-      const task = await this.tasksRepository.findOneBy({ id: taskId });
-      if (!task) {
-        throw new NotFoundException(`Task with ID ${taskId} not found`);
-      }
-      if (task.projectId !== projectId) {
-        throw new BadRequestException(`Task ${taskId} does not belong to project ${projectId}`);
-      }
-      commentData.task = task;
-    } else {
-      const project = await this.projectsRepository.findOneBy({ id: projectId });
-      if (!project) {
-        throw new NotFoundException(`Project with ID ${projectId} not found`);
-      }
-      commentData.project = project;
-    }
-
-    const comment = this.commentsRepository.create(commentData);
+    const comment = this.commentsRepository.create({
+      ...createCommentDto,
+      project,
+      author,
+    });
     return this.commentsRepository.save(comment);
   }
 

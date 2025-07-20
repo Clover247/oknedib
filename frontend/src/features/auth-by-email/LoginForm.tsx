@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, CircularProgress, Typography } from '@mui/material';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');

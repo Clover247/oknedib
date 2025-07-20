@@ -1,4 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Express } from 'express';
 import { ContentPlansService } from '@/modules/content-plans/2-application/use-cases/content-plans.service';
 import { CreateContentPlanDto } from '@/modules/content-plans/1-presentation/dtos/create-content-plan.dto';
 import { UpdateContentPlanDto } from '@/modules/content-plans/1-presentation/dtos/update-content-plan.dto';

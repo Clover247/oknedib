@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CacheModule } from '@nestjs/cache-manager';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ProjectsModule } from './modules/projects/projects.module';
@@ -12,6 +14,8 @@ import { ProjectDetailsModule } from './modules/project-details/project-details.
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { GoogleCalendarModule } from './modules/google-calendar/google-calendar.module';
+import { TasksModule } from './modules/tasks/tasks.module';
+import { SharedModule } from './shared/shared.module';
 
 @Module({
   imports: [
@@ -50,6 +54,7 @@ import { GoogleCalendarModule } from './modules/google-calendar/google-calendar.
     ReportsModule,
     GoogleCalendarModule,
     TasksModule,
+    SharedModule,
   ],
   controllers: [AppController],
   providers: [AppService],

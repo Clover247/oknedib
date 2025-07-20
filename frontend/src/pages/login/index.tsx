@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Container } from '@mui/material';
 import LoginForm from '@/features/auth-by-email/LoginForm';
 
-const LoginPage: React.FC = () => {
+export const LoginPage: React.FC = () => {
   return (
     <Container component="main" maxWidth="xs">
       <Box
@@ -21,5 +21,3 @@ const LoginPage: React.FC = () => {
     </Container>
   );
 };
-
-export default LoginPage;

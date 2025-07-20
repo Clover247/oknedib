@@ -1,7 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToMany, JoinTable, OneToOne } from 'typeorm';
 import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 import { ContentPlanItem } from '@/modules/content-plans/3-domain/entities/content-plan-item.entity';
 import { Comment } from '@/modules/project-details/3-domain/entities/comment.entity';
+import { Task } from '@/modules/tasks/3-domain/entities/task.entity';
+import { GoogleApiCredentials } from '@/modules/google-calendar/3-domain/entities/google-api-credentials.entity';
 
 export enum UserRole {
   ADMIN = 'ADMIN',

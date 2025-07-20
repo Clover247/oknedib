@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 import { User } from '@/modules/users/3-domain/entities/user.entity';
-// import { Task } from '@/modules/tasks/3-domain/entities/task.entity'; // Uncomment when Task entity is created
+import { Task } from '@/modules/tasks/3-domain/entities/task.entity';
 // import { ContentPlanItem } from '@/modules/content-plans/3-domain/entities/content-plan-item.entity'; // Uncomment when ContentPlanItem entity is created
 
 @Entity({ name: 'comments' })

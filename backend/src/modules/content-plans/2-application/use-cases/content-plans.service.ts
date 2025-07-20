@@ -17,10 +17,13 @@ export class ContentPlansService {
     private contentPlansRepository: Repository<ContentPlan>,
     @InjectRepository(ContentPlanItem)
     private contentPlanItemsRepository: Repository<ContentPlanItem>,
+    @InjectRepository(ContentPlanFile)
+    private contentPlanFilesRepository: Repository<ContentPlanFile>,
     @InjectRepository(Project)
     private projectsRepository: Repository<Project>,
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private cloudinaryService: CloudinaryService,
   ) {}
 
   async create(createContentPlanDto: CreateContentPlanDto): Promise<ContentPlan> {
@@ -130,15 +133,12 @@ export class ContentPlansService {
       throw new NotFoundException(`Content Plan Item with ID ${itemId} not found`);
     }
 
-    const uploadPath = path.join(__dirname, '..', '..', '..', 'storage');
-    await fs.mkdir(uploadPath, { recursive: true });
-    const filePath = path.join(uploadPath, file.originalname);
-    await fs.writeFile(filePath, file.buffer);
+    const uploadResult = await this.cloudinaryService.uploadStream(file);
 
     const newFile = this.contentPlanFilesRepository.create({
       originalName: file.originalname,
       mimeType: file.mimetype,
-      path: filePath, // Зберігаємо повний шлях для локального доступу
+      path: uploadResult.secure_url, // Зберігаємо URL з Cloudinary
       contentPlanItem: contentItem,
     });
 

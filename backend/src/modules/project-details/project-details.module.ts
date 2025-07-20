@@ -11,9 +11,10 @@ import { ProjectsModule } from '@/modules/projects/projects.module';
 import { UsersModule } from '@/modules/users/users.module';
 import { Project } from '@/modules/projects/3-domain/entities/project.entity';
 import { User } from '@/modules/users/3-domain/entities/user.entity';
+import { Task } from '@/modules/tasks/3-domain/entities/task.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BudgetHistory, ShootingHours, Comment, Project, User, Task]), ProjectsModule, UsersModule],
+  imports: [TypeOrmModule.forFeature([BudgetHistory, ShootingHours, Comment, Project, User]), ProjectsModule, UsersModule],
   providers: [BudgetHistoryService, ShootingHoursService, CommentsService],
   controllers: [ProjectDetailsController],
   exports: [TypeOrmModule],

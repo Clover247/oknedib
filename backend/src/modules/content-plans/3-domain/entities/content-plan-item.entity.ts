@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { ContentPlan } from './content-plan.entity';
 import { User } from '@/modules/users/3-domain/entities/user.entity';
+import { ContentPlanFile } from './content-plan-file.entity';
 
 export enum ContentItemType {
   POST = 'POST',

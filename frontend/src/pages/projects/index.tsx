@@ -23,7 +23,7 @@ export const ProjectsPage = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleRowClick = (params) => {
+  const handleRowClick = (params: { id: string }) => {
     navigate(`/projects/${params.id}`);
   };
 

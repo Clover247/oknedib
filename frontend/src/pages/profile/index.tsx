@@ -28,7 +28,7 @@ export const ProfilePage = () => {
     onSubmit: async (values) => {
       try {
         const updatedUser = await updateProfile(values).unwrap();
-        dispatch(setCredentials({ user: updatedUser, token: localStorage.getItem('token') }));
+        dispatch(setCredentials({ user: updatedUser, token: localStorage.getItem('token') || '' }));
       } catch (error) {
         console.error('Failed to update profile:', error);
       }
@@ -40,7 +40,7 @@ export const ProfilePage = () => {
       const file = event.target.files[0];
       try {
         const updatedUser = await uploadAvatar(file).unwrap();
-        dispatch(setCredentials({ user: updatedUser, token: localStorage.getItem('token') }));
+        dispatch(setCredentials({ user: updatedUser, token: localStorage.getItem('token') || '' }));
       } catch (error) {
         console.error('Failed to upload avatar:', error);
       }
@@ -79,7 +79,7 @@ export const ProfilePage = () => {
           value={formik.values.firstName}
           onChange={formik.handleChange}
           error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-          helperText={formik.touched.firstName && formik.errors.firstName}
+          helperText={formik.touched.firstName && String(formik.errors.firstName)}
           margin="normal"
         />
         <TextField
@@ -90,7 +90,7 @@ export const ProfilePage = () => {
           value={formik.values.lastName}
           onChange={formik.handleChange}
           error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-          helperText={formik.touched.lastName && formik.errors.lastName}
+          helperText={formik.touched.lastName && String(formik.errors.lastName)}
           margin="normal"
         />
         <Button color="primary" variant="contained" fullWidth type="submit" disabled={isLoading}>

@@ -35,14 +35,16 @@ let AuthService = class AuthService {
     async login(user) {
         const payload = { email: user.email, sub: user.id, role: user.role };
         return {
-            access_token: this.jwtService.sign(payload),
+            accessToken: this.jwtService.sign(payload),
+            user,
         };
     }
     async register(createUserDto) {
+        const { password, ...userData } = createUserDto;
         const salt = await bcrypt.genSalt();
-        const passwordHash = await bcrypt.hash(createUserDto.password, salt);
+        const passwordHash = await bcrypt.hash(password, salt);
         const newUser = Object.assign(new user_entity_1.User(), {
-            ...createUserDto,
+            ...userData,
             passwordHash,
         });
         await this.usersRepository.save(newUser);

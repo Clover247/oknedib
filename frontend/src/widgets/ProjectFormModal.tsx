@@ -11,7 +11,7 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
-import { useCreateProjectMutation } from '../shared/api/projectsApi';
+import { useCreateProjectMutation, useUpdateProjectMutation } from '../shared/api/projectsApi';
 
 interface ProjectFormModalProps {
   open: boolean;
@@ -32,15 +32,16 @@ const style = {
 };
 
 export const ProjectFormModal: React.FC<ProjectFormModalProps> = ({ open, onClose, project }) => {
-  const [name, setName] = useState(project?.name || '');
-  const [description, setDescription] = useState(project?.description || '');
-  const [status, setStatus] = useState(project?.status || 'ACTIVE');
-  const [budget, setBudget] = useState(project?.budget || 0);
-  const [budgetForTargeting, setBudgetForTargeting] = useState(project?.budgetForTargeting || 0);
-  const [startDate, setStartDate] = useState(project?.startDate ? new Date(project.startDate).toISOString().split('T')[0] : '');
-  const [endDate, setEndDate] = useState(project?.endDate ? new Date(project.endDate).toISOString().split('T')[0] : '');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [status, setStatus] = useState('ACTIVE');
+  const [budget, setBudget] = useState(0);
+  const [budgetForTargeting, setBudgetForTargeting] = useState(0);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
 
-  const [createProject, { isLoading }] = useCreateProjectMutation();
+  const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
+  const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
 
   useEffect(() => {
     if (project) {
@@ -65,7 +66,7 @@ export const ProjectFormModal: React.FC<ProjectFormModalProps> = ({ open, onClos
 
   const handleSubmit = async () => {
     try {
-      const newProject = {
+      const projectData = {
         name,
         description,
         status,
@@ -74,10 +75,15 @@ export const ProjectFormModal: React.FC<ProjectFormModalProps> = ({ open, onClos
         startDate: startDate ? new Date(startDate) : undefined,
         endDate: endDate ? new Date(endDate) : undefined,
       };
-      await createProject(newProject).unwrap();
+
+      if (project) {
+        await updateProject({ id: project.id, ...projectData }).unwrap();
+      } else {
+        await createProject(projectData).unwrap();
+      }
       onClose();
     } catch (error) {
-      console.error('Failed to create project:', error);
+      console.error('Failed to save project:', error);
     }
   };
 
@@ -159,10 +165,10 @@ export const ProjectFormModal: React.FC<ProjectFormModalProps> = ({ open, onClos
           variant="contained"
           color="primary"
           onClick={handleSubmit}
-          disabled={isLoading}
+          disabled={isCreating || isUpdating}
           sx={{ mt: 2 }}
         >
-          {isLoading ? 'Saving...' : (project ? 'Save Changes' : 'Create Project')}
+          {isCreating || isUpdating ? 'Saving...' : (project ? 'Save Changes' : 'Create Project')}
         </Button>
       </Box>
     </Modal>

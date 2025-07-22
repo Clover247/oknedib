@@ -12,6 +12,10 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
         ...result.map(({ id }) => ({ type: 'Project' as const, id })),
       ],
     }),
+    getProjectById: builder.query<any, string>({
+      query: (id) => `/projects/${id}`,
+      providesTags: (_result, _error, id) => [{ type: 'Project', id }],
+    }),
     createProject: builder.mutation<any, Partial<any>>({
       query: (project) => ({
         url: '/projects',
@@ -20,7 +24,15 @@ export const projectsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Project'],
     }),
+    updateProject: builder.mutation<any, Partial<any> & { id: string }>({
+      query: ({ id, ...project }) => ({
+        url: `/projects/${id}`,
+        method: 'PATCH',
+        body: project,
+      }),
+      invalidatesTags: (_result, _error, { id }) => [{ type: 'Project', id }, 'Project'],
+    }),
   }),
 });
 
-export const { useGetProjectsQuery, useCreateProjectMutation } = projectsApiSlice;
+export const { useGetProjectsQuery, useGetProjectByIdQuery, useCreateProjectMutation, useUpdateProjectMutation } = projectsApiSlice;

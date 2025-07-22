@@ -5,9 +5,11 @@ import { User } from '@/modules/users/3-domain/entities/user.entity';
 import { Comment } from '@/modules/project-details/3-domain/entities/comment.entity';
 
 export enum TaskStatus {
-  PENDING = 'PENDING',
+  TODO = 'TODO',
   IN_PROGRESS = 'IN_PROGRESS',
-  COMPLETED = 'COMPLETED',
+  IN_REVIEW = 'IN_REVIEW',
+  DONE = 'DONE',
+  ABANDONED = 'ABANDONED',
 }
 
 @Entity({ name: 'tasks' })
@@ -24,7 +26,7 @@ export class Task {
   @Column({
     type: 'enum',
     enum: TaskStatus,
-    default: TaskStatus.PENDING,
+    default: TaskStatus.TODO,
   })
   status: TaskStatus;
 

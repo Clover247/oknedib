@@ -4,6 +4,7 @@ import { LoginPage } from './pages/login';
 import { RegisterPage } from './pages/register';
 import { ProjectsPage } from './pages/projects';
 import { ProjectDetailsPage } from './pages/project-details';
+import { ProfilePage } from './pages/profile';
 import { Layout } from './widgets/Layout';
 import { useSelector } from 'react-redux';
 import { selectCurrentToken } from './app/store';
@@ -26,8 +27,9 @@ function App() {
               <Routes>
                 <Route path="/dashboard" element={<div>Dashboard</div>} />
                 <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/projects/:id" element={<ProjectDetailsPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/settings" element={<div>Settings</div>} />
-                                <Route path="/projects/:id" element={<ProjectDetailsPage />} /> {/* Add this line */}
                 <Route path="/" element={<Navigate to="/dashboard" />} />
               </Routes>
             </PrivateRoute>

@@ -10,7 +10,7 @@ export declare class ProjectsService {
     private shootingHoursRepository;
     constructor(projectsRepository: Repository<Project>, usersRepository: Repository<User>, shootingHoursRepository: Repository<ShootingHours>);
     create(createProjectDto: CreateProjectDto): Promise<Project>;
-    findAll(): Promise<Project[]>;
+    findAll(user: User): Promise<Project[]>;
     findOne(id: string): Promise<Project>;
     update(id: string, updateProjectDto: UpdateProjectDto): Promise<Project>;
     remove(id: string): Promise<void>;

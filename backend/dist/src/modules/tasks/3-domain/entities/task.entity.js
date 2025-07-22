@@ -16,9 +16,11 @@ const user_entity_1 = require("../../../users/3-domain/entities/user.entity");
 const comment_entity_1 = require("../../../project-details/3-domain/entities/comment.entity");
 var TaskStatus;
 (function (TaskStatus) {
-    TaskStatus["PENDING"] = "PENDING";
+    TaskStatus["TODO"] = "TODO";
     TaskStatus["IN_PROGRESS"] = "IN_PROGRESS";
-    TaskStatus["COMPLETED"] = "COMPLETED";
+    TaskStatus["IN_REVIEW"] = "IN_REVIEW";
+    TaskStatus["DONE"] = "DONE";
+    TaskStatus["ABANDONED"] = "ABANDONED";
 })(TaskStatus || (exports.TaskStatus = TaskStatus = {}));
 let Task = class Task {
 };
@@ -39,7 +41,7 @@ __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
         enum: TaskStatus,
-        default: TaskStatus.PENDING,
+        default: TaskStatus.TODO,
     }),
     __metadata("design:type", String)
 ], Task.prototype, "status", void 0);

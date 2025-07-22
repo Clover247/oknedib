@@ -29,6 +29,9 @@ export class User {
   @Column({ nullable: true })
   lastName: string;
 
+  @Column({ nullable: true })
+  avatarUrl: string;
+
   @Column({
     type: 'enum',
     enum: UserRole,

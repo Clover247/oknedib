@@ -3,8 +3,10 @@ import { ProjectsService } from '@/modules/projects/2-application/use-cases/proj
 import { CreateProjectDto } from '@/modules/projects/1-presentation/dtos/create-project.dto';
 import { UpdateProjectDto } from '@/modules/projects/1-presentation/dtos/update-project.dto';
 import { JwtAuthGuard } from '@/modules/auth/1-presentation/guards/jwt-auth.guard';
+import { GetUser } from '@/modules/auth/1-presentation/decorators/get-user.decorator';
+import { User } from '@/modules/users/3-domain/entities/user.entity';
 
-@UseGuards(JwtAuthGuard) // Захищаємо всі ендпоінти контролера
+@UseGuards(JwtAuthGuard)
 @Controller('projects')
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
@@ -15,8 +17,8 @@ export class ProjectsController {
   }
 
   @Get()
-  findAll() {
-    return this.projectsService.findAll();
+  findAll(@GetUser() user: User) {
+    return this.projectsService.findAll(user);
   }
 
   @Get(':id')

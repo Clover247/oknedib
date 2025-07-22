@@ -1,10 +1,11 @@
 
 import React, { useState } from 'react';
-import { Box, CircularProgress, Typography, Tabs, Tab } from '@mui/material';
+import { Box, CircularProgress, Typography, Tabs, Tab, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { useGetProjectsQuery } from '../../shared/api/projectsApi';
+import { useGetProjectByIdQuery, useUpdateProjectMutation } from '../../shared/api/projectsApi';
 import { ProjectTasksTab } from './tabs/ProjectTasksTab';
 import { ProjectContentPlanTab } from './tabs/ProjectContentPlanTab';
+import { ProjectFormModal } from '../../widgets/ProjectFormModal';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -25,7 +26,7 @@ function CustomTabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>
@@ -41,14 +42,17 @@ function a11yProps(index: number) {
 
 export const ProjectDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
-  const { data: projects, isLoading, isError } = useGetProjectsQuery();
-  const project = projects?.find(p => p.id === id);
+  const { data: project, isLoading, isError } = useGetProjectByIdQuery(id!);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [value, setValue] = useState(0);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
   if (isLoading) {
     return <CircularProgress />;
@@ -60,7 +64,10 @@ export const ProjectDetailsPage = () => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Typography variant="h4" gutterBottom>{project.name}</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Typography variant="h4" gutterBottom>{project.name}</Typography>
+        <Button variant="contained" onClick={handleOpenModal}>Edit Project</Button>
+      </Box>
       <Typography variant="body1" color="text.secondary">{project.description}</Typography>
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', mt: 4 }}>
@@ -83,6 +90,8 @@ export const ProjectDetailsPage = () => {
       <CustomTabPanel value={value} index={3}>
         Settings Content
       </CustomTabPanel>
+
+      <ProjectFormModal open={isModalOpen} onClose={handleCloseModal} project={project} />
     </Box>
   );
 };

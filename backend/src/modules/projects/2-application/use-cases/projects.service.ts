@@ -52,10 +52,23 @@ export class ProjectsService {
     return savedProject;
   }
 
-  async findAll(): Promise<Project[]> {
-    return this.projectsRepository.find({
-      relations: ['manager', 'specialists', 'contentMakers'],
-    });
+  async findAll(user: User): Promise<Project[]> {
+    if (user.role === 'ADMIN') {
+      return this.projectsRepository.find({
+        relations: ['manager', 'specialists', 'contentMakers'],
+      });
+    } else if (user.role === 'MANAGER') {
+      return this.projectsRepository.find({
+        where: { manager: { id: user.id } },
+        relations: ['manager', 'specialists', 'contentMakers'],
+      });
+    } else {
+      // Specialists see projects they are assigned to
+      return this.projectsRepository.find({
+        where: [{ specialists: { id: user.id } }, { contentMakers: { id: user.id } }],
+        relations: ['manager', 'specialists', 'contentMakers'],
+      });
+    }
   }
 
   async findOne(id: string): Promise<Project> {

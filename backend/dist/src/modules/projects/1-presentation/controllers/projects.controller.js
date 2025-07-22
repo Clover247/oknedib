@@ -18,6 +18,8 @@ const projects_service_1 = require("../../2-application/use-cases/projects.servi
 const create_project_dto_1 = require("../dtos/create-project.dto");
 const update_project_dto_1 = require("../dtos/update-project.dto");
 const jwt_auth_guard_1 = require("../../../auth/1-presentation/guards/jwt-auth.guard");
+const get_user_decorator_1 = require("../../../auth/1-presentation/decorators/get-user.decorator");
+const user_entity_1 = require("../../../users/3-domain/entities/user.entity");
 let ProjectsController = class ProjectsController {
     constructor(projectsService) {
         this.projectsService = projectsService;
@@ -25,8 +27,8 @@ let ProjectsController = class ProjectsController {
     create(createProjectDto) {
         return this.projectsService.create(createProjectDto);
     }
-    findAll() {
-        return this.projectsService.findAll();
+    findAll(user) {
+        return this.projectsService.findAll(user);
     }
     findOne(id) {
         return this.projectsService.findOne(id);
@@ -48,8 +50,9 @@ __decorate([
 ], ProjectsController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(),
+    __param(0, (0, get_user_decorator_1.GetUser)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [user_entity_1.User]),
     __metadata("design:returntype", void 0)
 ], ProjectsController.prototype, "findAll", null);
 __decorate([

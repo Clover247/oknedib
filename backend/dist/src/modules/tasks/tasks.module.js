@@ -20,6 +20,7 @@ exports.TasksModule = TasksModule = __decorate([
         imports: [typeorm_1.TypeOrmModule.forFeature([task_entity_1.Task])],
         controllers: [tasks_controller_1.TasksController],
         providers: [tasks_service_1.TasksService],
+        exports: [typeorm_1.TypeOrmModule],
     })
 ], TasksModule);
 //# sourceMappingURL=tasks.module.js.map

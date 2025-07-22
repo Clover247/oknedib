@@ -9,5 +9,6 @@ import { TasksController } from './1-presentation/controllers/tasks.controller';
   imports: [TypeOrmModule.forFeature([Task])],
   controllers: [TasksController],
   providers: [TasksService],
+  exports: [TypeOrmModule],
 })
 export class TasksModule {}

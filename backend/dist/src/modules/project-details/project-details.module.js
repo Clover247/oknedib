@@ -20,12 +20,18 @@ const projects_module_1 = require("../projects/projects.module");
 const users_module_1 = require("../users/users.module");
 const project_entity_1 = require("../projects/3-domain/entities/project.entity");
 const user_entity_1 = require("../users/3-domain/entities/user.entity");
+const tasks_module_1 = require("../tasks/tasks.module");
 let ProjectDetailsModule = class ProjectDetailsModule {
 };
 exports.ProjectDetailsModule = ProjectDetailsModule;
 exports.ProjectDetailsModule = ProjectDetailsModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([budget_history_entity_1.BudgetHistory, shooting_hours_entity_1.ShootingHours, comment_entity_1.Comment, project_entity_1.Project, user_entity_1.User]), projects_module_1.ProjectsModule, users_module_1.UsersModule],
+        imports: [
+            typeorm_1.TypeOrmModule.forFeature([budget_history_entity_1.BudgetHistory, shooting_hours_entity_1.ShootingHours, comment_entity_1.Comment, project_entity_1.Project, user_entity_1.User]),
+            projects_module_1.ProjectsModule,
+            users_module_1.UsersModule,
+            tasks_module_1.TasksModule
+        ],
         providers: [budget_history_service_1.BudgetHistoryService, shooting_hours_service_1.ShootingHoursService, comments_service_1.CommentsService],
         controllers: [project_details_controller_1.ProjectDetailsController],
         exports: [typeorm_1.TypeOrmModule],

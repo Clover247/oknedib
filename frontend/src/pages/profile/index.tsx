@@ -67,7 +67,7 @@ export const ProfilePage = () => {
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
+          helperText={formik.touched.email && String(formik.errors.email)}
           margin="normal"
           disabled
         />

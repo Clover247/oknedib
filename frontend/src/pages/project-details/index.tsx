@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Box, CircularProgress, Typography, Tabs, Tab, Button } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
+import { useGetProjectByIdQuery } from '../../shared/api/projectsApi';
+
 import { ProjectTasksTab } from './tabs/ProjectTasksTab';
 import { ProjectContentPlanTab } from './tabs/ProjectContentPlanTab';
 import { ProjectFormModal } from '../../widgets/ProjectFormModal';

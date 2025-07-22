@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
 import { useGetProjectsQuery } from '../../shared/api/projectsApi';
 import { ProjectFormModal } from '../../widgets/ProjectFormModal';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +23,7 @@ export const ProjectsPage = () => {
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleRowClick = (params: { id: string }) => {
+  const handleRowClick = (params: GridRowParams) => {
     navigate(`/projects/${params.id}`);
   };
 
